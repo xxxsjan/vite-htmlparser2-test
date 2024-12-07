@@ -30,6 +30,6 @@ const parser = new htmlparser2.Parser({
   },
 });
 
-document.body.innerHTML = htmlString;
+// document.body.innerHTML = htmlString;
 parser.write(htmlString);
 parser.end();

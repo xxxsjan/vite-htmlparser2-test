@@ -3,7 +3,7 @@ import { onMounted } from 'vue';
 var text = '这是一段需要自动换行的文本，它会根据Canvas的宽度自动调整换行。这是一段需要自动换行的文本，它会根据Canvas的宽度自动调整换行。';
 function wrapText(context, text, x, y, maxWidth, lineHeight) {
   var words = text.split('');
-  console.log('words: ', words);
+  // console.log('words: ', words);
   var line = '';
 
   for (var n = 0; n < words.length; n++) {

@@ -1,16 +1,18 @@
-import * as htmlparser2 from "htmlparser2";
+// import { Parser } from "htmlparser2";
+import Parser from "./Parser";
 
 let sIdx = -1;
 let eIdx = -1;
 const res = [];
 let isOpen = false;
 let isClose = false;
-// const htmlString = `<div class='text_content_box2'>😊做个<font color='#dd4b39' class='highlight'>测试</font>😊😊带图文的，完美。做个<font color='#dd4b39' class='highlight'>测试</font>带图文的，完美。做个<font color='#dd4b39' class='highlight'>测试</font>带图文的，完美。做个<font color='#dd4b39' class='highlight'>测试</font>带图文的，完美。做个<font color='#dd4b39' class='highlight'>测试</font>带图文的，完美。做个<font color='#dd4b39' class='highlight'>测试</font>带图文的，完美。做个<font color='#dd4b39' class='highlight'>测试</font>带图文的，完美。</div>`;
-const htmlString =
-  "<div class='text_content_box2'>😊1<font color='#dd4b39' class='highlight'>测试</font>😊2<font color='#dd4b39' class='highlight'>测试</font>😊3<font color='#dd4b39' class='highlight'>测试</font>😊4<font color='#dd4b39' class='highlight'>测试</font>😊5<font color='#dd4b39' class='highlight'>测试</font>😊6<font color='#dd4b39' class='highlight'>测试</font>😊7</div>";
+const htmlString = `<div class='text_content_box2'>😊做个<font color='#dd4b39' class='highlight'>测试</font>😊😊带图文的，完美。做个<font color='#dd4b39' class='highlight'>测试</font>带图文的，完美。做个<font color='#dd4b39' class='highlight'>测试</font>带图文的，完美。做个<font color='#dd4b39' class='highlight'>测试</font>带图文的，完美。做个<font color='#dd4b39' class='highlight'>测试</font>带图文的，完美。做个<font color='#dd4b39' class='highlight'>测试</font>带图文的，完美。做个<font color='#dd4b39' class='highlight'>测试</font>带图文的，完美。</div>`;
+// const htmlString =
+//   "<div class='text_content_box2'>😊1<font color='#dd4b39' class='highlight'>测试</font>😊2<font color='#dd4b39' class='highlight'>测试</font>😊3<font color='#dd4b39' class='highlight'>测试</font>😊4<font color='#dd4b39' class='highlight'>测试</font>😊5<font color='#dd4b39' class='highlight'>测试</font>😊6<font color='#dd4b39' class='highlight'>测试</font>😊7</div>";
 
 let str = "";
-const parser = new htmlparser2.Parser({
+
+const parser = new Parser({
   onopentag(name, attributes) {
     if (name !== "div") {
       isOpen = true;
@@ -30,6 +32,7 @@ const parser = new htmlparser2.Parser({
   },
 });
 
-// document.body.innerHTML = htmlString;
+// document.querySelector("#app").innerHTML = htmlString;
 parser.write(htmlString);
 parser.end();
+console.log(parser);

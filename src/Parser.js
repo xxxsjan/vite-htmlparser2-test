@@ -1,3 +1,15 @@
+function parseAttributes(attributeString) {
+  const attributes = {};
+  const regex = /([\w-]+)='([^']*)'/g; // Matches attribute="value"
+  let match;
+
+  while ((match = regex.exec(attributeString)) !== null) {
+    attributes[match[1]] = match[2];
+  }
+
+  return attributes;
+}
+
 class Parser {
   constructor(props) {
     this.token = "";
@@ -37,6 +49,7 @@ class Parser {
         const node = {
           tag: tagname,
           attrsStr,
+          attrs: parseAttributes(attrsStr),
           textContent: "",
           children: [],
         };

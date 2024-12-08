@@ -1,5 +1,4 @@
 function parseAttributes(attributeString) {
-  console.log("attributeString: ", attributeString);
   const attributes = {};
   const regex = /([\w-]+)=(['"])([^'\"]*)\2/g;
   let match;

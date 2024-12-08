@@ -22,10 +22,15 @@ class Parser {
         const tagname = openTagMatch[1];
         this.onopentag(tagname, {});
         const lastNode = nodes[nodes.length - 1];
-        if (textContent && lastNode) {
+        if (lastNode) {
           lastNode.textContent += textContent;
           textContent && this.ontext(textContent);
-          textContent = "";
+        } else {
+          textContent &&
+            nodes.push({
+              type: "text",
+              textContent,
+            });
         }
         textContent = "";
         const attrsStr = openTagMatch[2];

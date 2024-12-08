@@ -15,21 +15,21 @@ class Parser {
     let textContent = "";
     const parseStr = (token, pNode) => {
       if (!token) return;
-      if (token.startsWith("<div")) {
-        this.onopentag("div", {});
+      const openTagMatch = token.match(/^<(\w+)(.*?)>/);
+
+      if (openTagMatch) {
+        const tagname = openTagMatch[1];
+        this.onopentag(tagname, {});
         textContent = "";
-        const match = token.match(/<div(.*?)>/);
-        console.log("match: ", match);
-        const attrsStr = match[1];
+        const attrsStr = openTagMatch[2];
         const node = {
           tag: "div",
-          props: {},
           attrsStr,
           textContent: "",
           children: [],
         };
         nodes.push(node);
-        token = token.slice(match[0].length);
+        token = token.slice(openTagMatch[0].length);
         parseStr(token);
       } else if (token.startsWith("<font")) {
         this.onopentag("font", {});
@@ -42,7 +42,6 @@ class Parser {
         const attrsStr = match[1];
         const node = {
           tag: "font",
-          props: {},
           attrsStr,
           textContent: "",
           children: [],

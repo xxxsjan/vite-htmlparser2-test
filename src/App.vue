@@ -48,7 +48,7 @@ onMounted(() => {
 
 <template>
   <div>
-    <div style="width: 500px;background-color: #000;color: #fff;text-align: left;">
+    <div style="width: 500px;background-color: #000;color: #fff;text-align: left;margin-bottom: 10px;">
       <!-- <span> -->
       {{ text }}
       <!-- </span> -->

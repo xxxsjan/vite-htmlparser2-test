@@ -9,7 +9,7 @@ class Parser {
   write(token) {
     this.token = token;
   }
-  end() {
+  end = () => {
     let token = this.token;
     const nodes = this.nodes;
     let textContent = "";
@@ -72,7 +72,7 @@ class Parser {
       }
     };
     parseStr(token);
-  }
+  };
 }
 
 export default Parser;

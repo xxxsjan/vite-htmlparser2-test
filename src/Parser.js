@@ -16,14 +16,21 @@ class Parser {
     const parseStr = (token, pNode) => {
       if (!token) return;
       const openTagMatch = token.match(/^<(\w+)(.*?)>/);
+      const closeTagMatch = token.match(/^<\/(\w+)>/);
 
       if (openTagMatch) {
         const tagname = openTagMatch[1];
         this.onopentag(tagname, {});
+        const lastNode = nodes[nodes.length - 1];
+        if (textContent && lastNode) {
+          lastNode.textContent += textContent;
+          textContent && this.ontext(textContent);
+          textContent = "";
+        }
         textContent = "";
         const attrsStr = openTagMatch[2];
         const node = {
-          tag: "div",
+          tag: tagname,
           attrsStr,
           textContent: "",
           children: [],
@@ -31,49 +38,26 @@ class Parser {
         nodes.push(node);
         token = token.slice(openTagMatch[0].length);
         parseStr(token);
-      } else if (token.startsWith("<font")) {
-        this.onopentag("font", {});
-        if (textContent) {
-          nodes[nodes.length - 1].textContent += textContent;
-          textContent && this.ontext(textContent);
-          textContent = "";
-        }
-        const match = token.match(/<font(.*?)>/);
-        const attrsStr = match[1];
-        const node = {
-          tag: "font",
-          attrsStr,
-          textContent: "",
-          children: [],
-        };
-        textContent && this.ontext(textContent);
-        nodes.push(node);
-        token = token.slice(match[0].length);
-        parseStr(token);
-      } else if (token.startsWith("</div>")) {
-        this.onclosetag("div");
-        const lastNode = nodes[nodes.length - 1];
-        lastNode.textContent = textContent;
-        textContent && this.ontext(textContent);
-
-        textContent = "";
-        token = token.slice(6);
-        parseStr(token);
-      } else if (token.startsWith("</font>")) {
-        this.onclosetag("div");
+      } else if (closeTagMatch) {
+        const tagname = closeTagMatch[1];
+        this.onclosetag(tagname);
         nodes[nodes.length - 1].textContent = textContent;
         textContent && this.ontext(textContent);
-
         textContent = "";
+
         const cur = nodes.pop();
         const lastNode = nodes[nodes.length - 1];
-        lastNode.children.push({
-          type: "text",
-          textContent: lastNode.textContent,
-        });
+        if (lastNode) {
+          lastNode.children.push({
+            type: "text",
+            textContent: lastNode.textContent,
+          });
+          lastNode.textContent = "";
+          lastNode.children.push(cur);
+        } else {
+          nodes.push(cur);
+        }
 
-        lastNode.textContent = "";
-        lastNode.children.push(cur);
         token = token.slice(7);
         parseStr(token);
       } else {

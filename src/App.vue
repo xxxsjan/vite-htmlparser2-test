@@ -53,6 +53,7 @@ onMounted(() => {
       {{ text }}
       <!-- </span> -->
     </div>
+    <p>canvas模拟：</p>
     <canvas id="canvas" width="500" height="500"></canvas>
   </div>
 </template>

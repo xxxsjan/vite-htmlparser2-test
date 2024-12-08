@@ -1,10 +1,13 @@
 function parseAttributes(attributeString) {
+  console.log("attributeString: ", attributeString);
   const attributes = {};
-  const regex = /([\w-]+)='([^']*)'/g; // Matches attribute="value"
+  // ` color='#dd4b39' class='highlight' aa="asas"`.match(/([\w-]+)=(['"])([^'\"]*)\2/g) ==> ["color='#dd4b39'", "class='highlight'", 'aa="asas"']
+  const regex = /([\w-]+)=(['"])([^'\"]*)\2/g;
   let match;
 
   while ((match = regex.exec(attributeString)) !== null) {
-    attributes[match[1]] = match[2];
+    console.log("match: ", match);
+    attributes[match[1]] = match[3];
   }
 
   return attributes;
